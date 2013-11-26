@@ -1,0 +1,67 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.+'
+    }
+}
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    testLocal {
+        java.srcDir file('src/test/java')
+        resources.srcDir file('src/test/res')
+    }
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.0"
+
+    defaultConfig {
+        minSdkVersion 10
+        targetSdkVersion 19
+    }
+
+    sourceSets {
+        instrumentTest.setRoot('src/test')
+    }
+}
+
+//Android studio test configuration from http://kostyay.name/android-studio-robolectric-gradle-getting-work/
+
+dependencies {
+	compile 'com.android.support:appcompat-v7:+'
+
+    // Dependencies for the `testLocal` task, make sure to list all your global dependencies here as well
+    testLocalCompile 'junit:junit:4.11'
+    testLocalCompile 'com.google.android:android:2.+'
+    testLocalCompile 'com.android.support:appcompat-v7:+'
+
+    // Android Studio doesn't recognize the `testLocal` task, so we define the same dependencies as above for instrumentTest
+    // which is Android Studio's test task
+    //instrumentTestCompile 'junit:junit:4.11'
+    //instrumentTestCompile 'com.google.android:android:2.+'
+    //instrumentTestCompile 'com.android.support:appcompat-v7:+'
+}
+
+task localTest(type: Test, dependsOn: assemble) {
+    testClassesDir = sourceSets.testLocal.output.classesDir
+
+    android.sourceSets.main.java.srcDirs.each { dir ->
+        def buildDir = dir.getAbsolutePath().split('/')
+        buildDir =  (buildDir[0..(buildDir.length - 4)] + ['build', 'classes', 'debug']).join('/')
+
+        sourceSets.testLocal.compileClasspath += files(buildDir)
+        sourceSets.testLocal.runtimeClasspath += files(buildDir)
+    }
+
+    classpath = sourceSets.testLocal.runtimeClasspath
+}
+
+check.dependsOn localTest
