@@ -15,6 +15,12 @@ public class SharedPreferenceAPIClient {
     private Context context;
     private ContentResolver contentResolver;
 
+    private static final String INT_TYPE = "integer";
+    private static final String LONG_TYPE = "long";
+    private static final String FLOAT_TYPE = "float";
+    private static final String BOOLEAN_TYPE = "boolean";
+    private static final String STRING_TYPE = "string";
+
     public SharedPreferenceAPIClient(Context context, String authority) {
         this.authority = authority;
         this.context = context;
@@ -88,7 +94,7 @@ public class SharedPreferenceAPIClient {
     public String getString(String key, String def) {
 
 
-        Uri uri = getContentUri(key, SharedPreferenceAPI.STRING_TYPE);
+        Uri uri = getContentUri(key, STRING_TYPE);
         Cursor cursor = this.contentResolver.query(uri, null, null, null, null);
 
         return getStringValue(cursor, def);
@@ -97,7 +103,7 @@ public class SharedPreferenceAPIClient {
     public boolean getBoolean(String key, boolean def) {
 
 
-        Uri uri = getContentUri(key, SharedPreferenceAPI.BOOLEAN_TYPE);
+        Uri uri = getContentUri(key, BOOLEAN_TYPE);
         Cursor cursor = this.contentResolver.query(uri, null, null, null, null);
 
         return getBooleanValue(cursor, def);
@@ -106,7 +112,7 @@ public class SharedPreferenceAPIClient {
     public int getInt(String key, int def) {
 
 
-        Uri uri = getContentUri(key, SharedPreferenceAPI.INT_TYPE);
+        Uri uri = getContentUri(key, INT_TYPE);
         Cursor cursor = this.contentResolver.query(uri, null, null, null, null);
 
         return getIntValue(cursor, def);
@@ -115,7 +121,7 @@ public class SharedPreferenceAPIClient {
     public long getLong(String key, long def) {
 
 
-        Uri uri = this.getContentUri(key, SharedPreferenceAPI.LONG_TYPE);
+        Uri uri = this.getContentUri(key, LONG_TYPE);
         Cursor cursor = contentResolver.query(uri, null, null, null, null);
 
         return getLongValue(cursor, def);
@@ -124,7 +130,7 @@ public class SharedPreferenceAPIClient {
     public float getFloat(String key, float def) {
 
 
-        Uri uri = getContentUri(key, SharedPreferenceAPI.FLOAT_TYPE);
+        Uri uri = getContentUri(key, FLOAT_TYPE);
         Cursor cursor = this.contentResolver.query(uri, null, null, null, null);
 
         return getFloatValue(cursor, def);

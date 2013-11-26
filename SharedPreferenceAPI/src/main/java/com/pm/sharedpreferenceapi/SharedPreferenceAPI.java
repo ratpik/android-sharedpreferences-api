@@ -25,11 +25,11 @@ public class SharedPreferenceAPI extends ContentProvider {
     private static final String TYPE = "type";
     private static final String KEY = "key";
 
-    public static final String INT_TYPE = "integer";
-    public static final String LONG_TYPE = "long";
-    public static final String FLOAT_TYPE = "float";
-    public static final String BOOLEAN_TYPE = "boolean";
-    public static final String STRING_TYPE = "string";
+    private static final String INT_TYPE = "integer";
+    private static final String LONG_TYPE = "long";
+    private static final String FLOAT_TYPE = "float";
+    private static final String BOOLEAN_TYPE = "boolean";
+    private static final String STRING_TYPE = "string";
 
     private static final int MATCH_DATA = 0x010000;
 
